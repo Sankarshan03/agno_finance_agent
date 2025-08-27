@@ -1,0 +1,32 @@
+2025-08-27 15:56:19,513 - ERROR - Data file stock_data.csv not found
+2025-08-27 15:56:34,614 - ERROR - Data file stock_data.csv not found
+2025-08-27 15:56:34,752 - ERROR - Data file stock_data.csv not found
+2025-08-27 16:01:16,051 - ERROR - HTTP Error 404: 
+2025-08-27 16:01:16,944 - ERROR - HTTP Error 404: 
+2025-08-27 16:01:17,526 - ERROR - HTTP Error 404: 
+2025-08-27 16:01:19,881 - ERROR - HTTP Error 404: 
+2025-08-27 16:01:20,791 - ERROR - HTTP Error 404: 
+2025-08-27 16:01:21,311 - ERROR - HTTP Error 404: 
+2025-08-27 16:01:24,392 - ERROR - $I.PA: possibly delisted; no price data found  (period=6mo) (Yahoo error = "No data found, symbol may be delisted")
+2025-08-27 16:01:25,386 - ERROR - $I.PA: possibly delisted; no price data found  (period=1mo) (Yahoo error = "No data found, symbol may be delisted")
+2025-08-27 16:02:03,124 - ERROR - HTTP Error 404: 
+2025-08-27 16:02:04,029 - ERROR - HTTP Error 404: 
+2025-08-27 16:02:04,661 - ERROR - HTTP Error 404: 
+2025-08-27 16:02:06,403 - ERROR - HTTP Error 404: 
+2025-08-27 16:02:07,081 - ERROR - HTTP Error 404: 
+2025-08-27 16:02:07,641 - ERROR - HTTP Error 404: 
+2025-08-27 16:02:09,081 - ERROR - HTTP Error 404: 
+2025-08-27 16:02:09,783 - ERROR - HTTP Error 404: 
+2025-08-27 16:02:10,319 - ERROR - HTTP Error 404: 
+2025-08-27 16:02:11,061 - ERROR - HTTP Error 404: 
+2025-08-27 16:02:11,725 - ERROR - HTTP Error 404: 
+2025-08-27 16:02:12,440 - ERROR - HTTP Error 404: 
+2025-08-27 16:02:12,989 - ERROR - $P: possibly delisted; no price data found  (period=1d)
+2025-08-27 16:05:44,132 - ERROR - HTTP Error 404: 
+2025-08-27 16:05:45,031 - ERROR - HTTP Error 404: 
+2025-08-27 16:05:46,075 - ERROR - HTTP Error 404: 
+2025-08-27 16:05:46,673 - ERROR - HTTP Error 404: 
+2025-08-27 16:05:47,192 - ERROR - HTTP Error 404: 
+2025-08-27 16:05:48,911 - ERROR - HTTP Error 404: 
+2025-08-27 16:05:50,056 - ERROR - $META:NASDAQ: possibly delisted; no price data found  (period=1d) (Yahoo error = "No data found, symbol may be delisted")
+2025-08-27 17:09:19,914 - ERROR - Query error: <Response [404 Not Found]>

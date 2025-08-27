@@ -1,0 +1,16 @@
+[project]
+name = "agno-agent"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "agno>=1.8.0",
+    "fastapi>=0.116.1",
+    "google-genai>=1.31.0",
+    "matplotlib>=3.10.5",
+    "mplfinance>=0.12.10b0",
+    "sqlalchemy>=2.0.43",
+    "streamlit>=1.49.0",
+    "yfinance>=0.2.65",
+]
