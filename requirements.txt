@@ -1,0 +1,12 @@
+streamlit>=1.28.0
+yfinance>=0.2.18
+pandas>=1.5.0
+matplotlib>=3.7.0
+mplfinance>=0.12.9b7
+python-dotenv>=1.0.0
+agno>=0.1.0  # If available on PyPI, otherwise install manually
+pyarrow>=13.0.0  # For DataFrame serialization in Streamlit
+cachetools>=5.3.0  # For efficient caching
+requests>=2.31.0  # For API calls
+google-genai
+sqlalchemy>=1.4.0
