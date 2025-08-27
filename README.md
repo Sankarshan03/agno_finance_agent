@@ -2,7 +2,7 @@
 
 ## Overview
 
-An intelligent Streamlit application that provides AI-powered financial analysis for stocks. The tool answers natural language queries about stocks, displays key financial metrics, and provides interactive visualizations of price movements using the Gemini 2.0 Flash model and yfinance data.
+An intelligent financial analysis tool that provides AI-powered insights into stock performance. This Streamlit application answers natural language queries about stocks, displays key financial metrics, and provides interactive visualizations of price movements using the Gemini 2.0 Flash model and yfinance data.
 
 ## Features
 
@@ -12,132 +12,167 @@ An intelligent Streamlit application that provides AI-powered financial analysis
   - Bar chart for 52-week high/low comparison
   - Line chart for 6-month historical price trends
   - Candlestick chart for 1-month price movements
-- **Robust Error Handling**: Automatic retries for API errors with exponential backoff
 - **Global Stock Support**: Handles international tickers with exchange suffixes (e.g., .NS, .BO, .L)
 - **Intelligent Caching**: Optimized performance with 24-hour data caching
+- **Robust Error Handling**: Automatic retries for API errors with exponential backoff
 
 ## Prerequisites
 
 - Python 3.8+
 - Google Cloud account with Gemini API access (free tier available)
-- Optional: API keys for alternative LLMs (Hugging Face, OpenRouter) for free usage
+- Docker (optional, for containerized deployment)
 
 ## Installation
 
-1. **Clone the Repository**
+### Method 1: Using Python Virtual Environment
+
+1. **Clone the repository**
    ```bash
    git clone <repository-url>
    cd <repository-directory>
    ```
 
-2. **Install Dependencies**
+2. **Create a virtual environment**
    ```bash
-   pip install streamlit yfinance pandas matplotlib mplfinance python-dotenv
-   ```
+   # Windows
+   python -m venv venv
+   venv\Scripts\activate
    
-   Note: The `agno` library (for Agent, Gemini, YFinanceTools, SqliteStorage) is required. Ensure it's installed in your environment.
-
-3. **Environment Setup**
-   Create a `.env` file in the project root:
-   ```
-   GOOGLE_API_KEY=your-google-api-key
-   # Optional alternative API keys:
-   # HUGGINGFACE_API_KEY=your-huggingface-key
-   # OPENROUTER_API_KEY=your-openrouter-key
+   # Mac/Linux
+   python3 -m venv venv
+   source venv/bin/activate
    ```
 
-4. **Obtain API Keys**
-   - Google Gemini: Get from [Google Cloud Console](https://cloud.google.com/)
-   - Optional alternatives: [Hugging Face](https://huggingface.co/), [OpenRouter](https://openrouter.ai/)
+3. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Set up environment variables**
+   ```bash
+   echo "GOOGLE_API_KEY=your_google_api_key_here" > .env
+   ```
+
+### Method 2: Using Docker
+
+1. **Build the Docker image**
+   ```bash
+   docker build -t financial-analysis-app .
+   ```
+
+2. **Run the container**
+   ```bash
+   # Create cache file
+   touch cache.pkl
+   
+   # Run container
+   docker run -d -p 8501:8501 \
+     -e GOOGLE_API_KEY=your_google_api_key_here \
+     -v $(pwd)/cache.pkl:/app/cache.pkl \
+     --name financial-app \
+     financial-analysis-app
+   ```
+
+### Method 3: Using Docker Compose (Recommended)
+
+1. **Set up environment file**
+   ```bash
+   echo "GOOGLE_API_KEY=your_google_api_key_here" > .env
+   ```
+
+2. **Start the application**
+   ```bash
+   docker-compose up -d
+   ```
 
 ## Usage
 
-1. **Launch the Application**
+1. **Start the application**
    ```bash
+   # If using Python directly
    streamlit run main.py
+   
+   # If using Docker
+   # Application will be available at http://localhost:8501
    ```
-   The app will open in your browser at `http://localhost:8501`.
 
-2. **Enter Your Queries**
-   - Input financial questions in natural language
-   - Examples: "What is the stock price of AMZN?", "Analyze META stock"
+2. **Ask financial questions**
+   - Input questions like "What is the stock price of AMZN?" or "Analyze META stock"
    - Click "Run Query" to generate analysis
 
 3. **Supported Ticker Formats**
    - US stocks: AMZN, META, AAPL
    - International stocks: TCS.NS (NSE), RELIANCE.BO (BSE), VOD.L (LSE)
 
+## Configuration
+
+### Environment Variables
+
+Create a `.env` file in the project root:
+
+```
+GOOGLE_API_KEY=your_google_api_key_here
+# Optional alternative API keys:
+# HUGGINGFACE_API_KEY=your_huggingface_key
+# OPENROUTER_API_KEY=your_openrouter_key
+```
+
+### API Keys
+
+- **Google Gemini**: Obtain from [Google Cloud Console](https://cloud.google.com/)
+- **Hugging Face**: Optional alternative, obtain from [Hugging Face](https://huggingface.co/)
+- **OpenRouter**: Optional alternative, obtain from [OpenRouter](https://openrouter.ai/)
+
 ## Troubleshooting
 
-### Common Issues & Solutions
+### Common Issues
 
-**Gemini API Errors (503, 429)**
-- Verify API key in Google Cloud Console
-- Check quota usage in Google Cloud dashboard
-- Application automatically retries 5 times with exponential backoff
+1. **Gemini API Errors (503, 429)**
+   - Verify API key in Google Cloud Console
+   - Check quota usage in Google Cloud dashboard
+   - Application automatically retries 5 times with exponential backoff
 
-**DataFrame Serialization Errors**
-- Update dependencies: `pip install --upgrade streamlit pyarrow`
-- Ensure proper data type conversion in code
+2. **Ticker Not Recognized**
+   - Verify ticker format and exchange suffix
+   - Check validity at [Yahoo Finance](https://finance.yahoo.com/)
+   - Delete `cache.pkl` to clear stale data
 
-**Ticker Not Recognized**
-- Verify ticker format and exchange suffix
-- Check validity at [Yahoo Finance](https://finance.yahoo.com/)
-- Delete `cache.pkl` to clear stale data: `rm cache.pkl`
+3. **No Data Available**
+   - Confirm ticker is supported by yfinance
+   - Try alternative exchange suffixes for international stocks
 
-**No Data Available**
-- Confirm ticker is supported by yfinance
-- Try alternative exchange suffixes for international stocks
+4. **Docker Deployment Issues**
+   - Ensure Docker Desktop is running
+   - Check file permissions for cache.pkl
+   - Use absolute paths for volume mounts on Windows
 
-## Alternative LLM Options
+### Logs
+
+Application logs are stored in `app.log` for debugging purposes.
+
+## Project Structure
+
+```
+.
+├── main.py                 # Main application code
+├── requirements.txt        # Python dependencies
+├── Dockerfile             # Docker configuration
+├── docker-compose.yml     # Docker Compose configuration
+├── .env                   # Environment variables (create this)
+├── cache.pkl              # Data cache (auto-generated)
+├── agents.db              # Agent sessions database (auto-generated)
+└── app.log                # Application logs (auto-generated)
+```
+
+## API Alternatives
 
 To avoid Gemini API limitations, consider these free alternatives:
 
-### Hugging Face Inference API
-- Models: Mistral 7B, LLaMA 2
-- Free tier: ~1000 requests/day
-- Setup: Sign up at [Hugging Face](https://huggingface.co/)
+- **Hugging Face Inference API**: ~1000 requests/day free tier
+- **OpenRouter**: Limited free credits available
+- **Cerebras Inference API**: Limited free credits for testing
 
-### OpenRouter
-- Models: LLaMA 3, Mistral Nemo
-- Free tier: Limited credits
-- Setup: Register at [OpenRouter](https://openrouter.ai/)
-
-### Implementation Example (Hugging Face)
-```python
-from huggingface_hub import InferenceClient
-
-class HuggingFaceModel:
-    def __init__(self, api_key, model_id="mistralai/Mixtral-8x7B-Instruct-v0.1"):
-        self.client = InferenceClient(api_key=api_key, model=model_id)
-    
-    def run(self, query):
-        try:
-            response = self.client.text_generation(
-                prompt=query, 
-                max_new_tokens=500
-            )
-            return type('obj', (object,), {'content': response})
-        except Exception as e:
-            return type('obj', (object,), {'content': f"Error: {str(e)}"})
-
-# Update agent initialization
-agent = Agent(
-    session_id="financial_analysis_ui",
-    user_id="user_ui",
-    model=HuggingFaceModel(api_key=os.environ.get("HUGGINGFACE_API_KEY")),
-    storage=storage,
-    tools=[YFinanceTools(...)],
-    markdown=True
-)
-```
-
-## Performance Notes
-
-- **Gemini 2.0 Flash**: Optimized for financial queries with best performance
-- **Free Alternatives**: May have lower performance for complex analysis
-- **Rate Limits**: Free tiers have usage restrictions; consider paid options for heavy usage
-- **Caching**: Data cached for 24 hours; delete `cache.pkl` to force refresh
+See the code for implementation examples of alternative LLM providers.
 
 ## License
 
@@ -148,19 +183,11 @@ This project utilizes:
 
 ## Support
 
-For issues or feature requests:
+For issues or questions:
 1. Check the troubleshooting guide above
 2. Review application logs in `app.log`
-3. Open a GitHub issue with detailed error information
-4. Contact maintainers for critical issues
-
-## Contributing
-
-Contributions are welcome! Please:
-1. Fork the repository
-2. Create a feature branch
-3. Submit a pull request with comprehensive tests
-4. Ensure code follows existing style and patterns
+3. Ensure all dependencies are properly installed
+4. Verify API keys are correctly configured
 
 ---
 
