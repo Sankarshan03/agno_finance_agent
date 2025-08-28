@@ -73,18 +73,6 @@ An intelligent financial analysis tool that provides AI-powered insights into st
      financial-analysis-app
    ```
 
-### Method 3: Using Docker Compose (Recommended)
-
-1. **Set up environment file**
-   ```bash
-   echo "GOOGLE_API_KEY=your_google_api_key_here" > .env
-   ```
-
-2. **Start the application**
-   ```bash
-   docker-compose up -d
-   ```
-
 ## Usage
 
 1. **Start the application**
@@ -190,5 +178,6 @@ For issues or questions:
 4. Verify API keys are correctly configured
 
 ---
+
 
 *Note: This application is for educational and informational purposes only. Not financial advice. Always conduct your own research before making investment decisions.*
