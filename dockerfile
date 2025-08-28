@@ -5,7 +5,10 @@ FROM python:3.9-slim
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     STREAMLIT_SERVER_PORT=8501 \
-    PORT=8501
+    PORT=8501 \
+    HOME=/app \
+    MPLCONFIGDIR=/tmp/matplotlib \
+    STREAMLIT_GLOBAL_DEVELOPMENT_MODE=false
 
 # Set working directory
 WORKDIR /app
@@ -16,7 +19,10 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements file first (for better caching)
+# Create necessary directories with proper permissions
+RUN mkdir -p /tmp/matplotlib && chmod 777 /tmp/matplotlib
+
+# Copy requirements file
 COPY requirements.txt .
 
 # Install Python dependencies
@@ -26,7 +32,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Create a non-root user and switch to it
-RUN groupadd -r streamlit && useradd -r -g streamlit streamlit
+RUN adduser --disabled-password --gecos '' --home /app streamlit
 RUN chown -R streamlit:streamlit /app
 USER streamlit
 
